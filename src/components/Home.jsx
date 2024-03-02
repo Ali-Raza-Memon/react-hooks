@@ -1,16 +1,24 @@
-import React,{ useState } from 'react'
+import React, { useState, useEffect } from "react";
 
 const Home = () => {
-    const [count,setCount] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+
   return (
     <div>
-        <p>count : {count}</p>
-        <div className='space-x-4'>
-            <button onClick={()=>setCount(count+1)} className='px-2 my-3 bg-blue-700 text-white '>Add</button>
-            <button onClick={()=>setCount(count-1)} className='px-2 my-3 bg-yellow-500 text-white'>Minus</button>
-        </div>
+      <h2>products</h2>
+      <ol>
+        {data.map((item) => (
+          <li key={item.id}>{item.title}</li>
+        ))}
+      </ol>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
